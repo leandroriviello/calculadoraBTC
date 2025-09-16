@@ -486,6 +486,18 @@
             border-radius: 999px;
         }
 
+        .select-items.empty .select-list {
+            display: none;
+        }
+
+        .select-items.empty::after {
+            content: 'Sin resultados';
+            padding: 1rem;
+            text-align: center;
+            color: rgba(202, 210, 224, 0.7);
+            font-size: 0.85rem;
+        }
+
         .select-hide {
             display: none;
         }
@@ -645,6 +657,10 @@
 
             .select-list::-webkit-scrollbar-thumb {
                 background: rgba(100, 116, 139, 0.35);
+            }
+
+            .select-items.empty::after {
+                color: rgba(76, 86, 106, 0.65);
             }
 
             .select-item:hover {
@@ -867,19 +883,19 @@
             function getIconAndText(currency) {
                 switch(currency) {
                     case 'BTC':
-                        return '<i class="fab fa-bitcoin" style="color: #ffffff;"></i> Bitcoin (BTC)';
+                        return '<i class="fab fa-bitcoin"></i> Bitcoin (BTC)';
                     case 'SAT':
-                        return '<i class="fas fa-coins" style="color: #ffffff;"></i> Satoshis (SAT)';
+                        return '<i class="fas fa-coins"></i> Satoshis (SAT)';
                     case 'ETH':
-                        return '<i class="fab fa-ethereum" style="color: #ffffff;"></i> Ethereum (ETH)';
+                        return '<i class="fab fa-ethereum"></i> Ethereum (ETH)';
                     case 'SOL':
-                        return '<i class="fas fa-sun" style="color: #ffffff;"></i> Solana (SOL)';
+                        return '<i class="fas fa-sun"></i> Solana (SOL)';
                     case 'USDT':
-                        return '<i class="fas fa-dollar-sign" style="color: #ffffff;"></i> Tether (USDT)';
+                        return '<i class="fas fa-dollar-sign"></i> Tether (USDT)';
                     case 'ARS':
-                        return '<i class="fas fa-dollar-sign" style="color: #ffffff;"></i> Peso Argentino (ARS)';
+                        return '<i class="fas fa-dollar-sign"></i> Peso Argentino (ARS)';
                     default:
-                        return '<i class="fas fa-money-bill-alt" style="color: #ffffff;"></i> Desconocido';
+                        return '<i class="fas fa-money-bill-alt"></i> Desconocido';
                 }
             }
 
@@ -901,10 +917,22 @@
             function closeAllSelectsExcept(currentSelect) {
                 customSelects.forEach(select => {
                     if (select !== currentSelect) {
-                        const items = select.querySelector('.select-items');
+                        const itemsContainer = select.querySelector('.select-items');
                         const selected = select.querySelector('.select-selected');
-                        items.classList.add('select-hide');
+                        if (!itemsContainer || !selected) {
+                            return;
+                        }
+
+                        itemsContainer.classList.add('select-hide');
                         selected.classList.remove('select-arrow-active');
+                        const searchField = select.querySelector('.select-search input');
+                        if (searchField) {
+                            searchField.value = '';
+                        }
+                        select.querySelectorAll('.select-item').forEach(item => {
+                            item.style.display = 'flex';
+                        });
+                        itemsContainer.classList.remove('empty');
                     }
                 });
             }
@@ -913,12 +941,50 @@
                 const select = customSelect.querySelector('select');
                 const selectSelected = customSelect.querySelector('.select-selected');
                 const selectItems = customSelect.querySelector('.select-items');
+                const searchInput = selectItems.querySelector('.select-search input');
+                const items = Array.from(selectItems.querySelectorAll('.select-item'));
+
+                function filterOptions(query) {
+                    const normalized = query.trim().toLowerCase();
+                    let visibleItems = 0;
+
+                    items.forEach(item => {
+                        const matches = item.textContent.toLowerCase().includes(normalized);
+                        item.style.display = matches ? 'flex' : 'none';
+                        if (matches) {
+                            visibleItems += 1;
+                        }
+                    });
+
+                    selectItems.classList.toggle('empty', visibleItems === 0);
+                }
+
+                function updateActiveItem(scrollIntoView = false) {
+                    const currentValue = select.value;
+                    let activeElement = null;
+
+                    items.forEach(item => {
+                        const isActive = item.getAttribute('data-value') === currentValue;
+                        item.classList.toggle('selected', isActive);
+                        if (isActive) {
+                            activeElement = item;
+                        }
+                    });
+
+                    if (scrollIntoView && activeElement) {
+                        activeElement.scrollIntoView({ block: 'nearest' });
+                    }
+                }
                 
                 // Cerrar todos los select cuando se hace clic fuera
                 document.addEventListener('click', function(e) {
                     if (!customSelect.contains(e.target)) {
                         selectItems.classList.add('select-hide');
                         selectSelected.classList.remove('select-arrow-active');
+                        if (searchInput) {
+                            searchInput.value = '';
+                            filterOptions('');
+                        }
                     }
                 });
 
@@ -929,24 +995,48 @@
                     closeAllSelectsExcept(customSelect);
                     this.classList.toggle('select-arrow-active');
                     selectItems.classList.toggle('select-hide');
+
+                     if (!selectItems.classList.contains('select-hide')) {
+                        updateActiveItem(true);
+                        if (searchInput) {
+                            searchInput.value = '';
+                            filterOptions('');
+                            setTimeout(() => searchInput.focus(), 0);
+                        }
+                     }
                 });
 
                 // Manejo de selección de items
-                const items = selectItems.querySelectorAll('.select-item');
                 items.forEach(item => {
                     item.addEventListener('click', function(e) {
                         e.stopPropagation();
                         const value = this.getAttribute('data-value');
                         select.value = value;
                         selectSelected.innerHTML = this.innerHTML;
+                        updateActiveItem();
                         selectItems.classList.add('select-hide');
                         selectSelected.classList.remove('select-arrow-active');
+                        if (searchInput) {
+                            searchInput.value = '';
+                            filterOptions('');
+                        }
                         
                         // Disparar evento change en el select original
                         const event = new Event('change');
                         select.dispatchEvent(event);
                     });
                 });
+
+                if (searchInput) {
+                    searchInput.addEventListener('input', function() {
+                        filterOptions(this.value);
+                    });
+                }
+
+                filterOptions('');
+                updateActiveItem();
+
+                select.addEventListener('change', () => updateActiveItem());
             });
         }
 
@@ -957,11 +1047,14 @@
         async function setInitialValues() {
             // Establecer valores iniciales
             document.getElementById('amount').value = '1000';
-            document.getElementById('fromCurrency').value = 'SAT';
-            document.getElementById('toCurrency').value = 'USDT';
-            
-            // Actualizar los selectores visuales
-            updateIcons();
+            const fromSelect = document.getElementById('fromCurrency');
+            const toSelect = document.getElementById('toCurrency');
+
+            fromSelect.value = 'SAT';
+            toSelect.value = 'USDT';
+
+            fromSelect.dispatchEvent(new Event('change'));
+            toSelect.dispatchEvent(new Event('change'));
             
             // Realizar la conversión inicial
             await convert();
