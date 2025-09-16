@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Metatags -->
+    <meta name="description" content="Calculadora BTC y conversor de satoshis con precios en vivo de CoinGecko. Convierte Bitcoin, SAT, Ethereum, Solana, Tether y Peso Argentino en segundos.">
+    <meta name="keywords" content="calculadora bitcoin, conversor satoshis, btc a usd, btc a ars, precio bitcoin hoy, convertir criptomonedas, crypto calculator, coingecko satoshis">
+    <meta name="author" content="Leandro Riviello">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#050607">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="Calculadora BTC a Satoshis | Conversor de Criptomonedas">
+    <meta property="og:description" content="Conversor de Bitcoin a satoshis y otras monedas populares con datos en vivo. Calcula BTC, SAT, ETH, SOL, USDT y ARS en tiempo real.">
+    <meta property="og:image" content="https://calculadorabtc.com/assets/og-image.jpg">
+    <meta property="og:url" content="https://calculadorabtc.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_AR">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Calculadora BTC a Satoshis">
+    <meta name="twitter:description" content="Convierte Bitcoin y satoshis a USD, ARS y más con datos confiables en vivo.">
+    <meta name="twitter:creator" content="@leandroriviello">
+    <meta name="twitter:image" content="https://calculadorabtc.com/assets/og-image.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://calculadorabtc.com/">
+    
+    <title>Calculadora BTC a Satoshis | Conversor de Criptomonedas en Tiempo Real</title>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Conversor de Criptomonedas",
+        "description": "Calculadora BTC a satoshis con tipos de cambio actualizados por CoinGecko. Convierte Bitcoin, Ethereum, Solana, Tether y Peso Argentino al instante.",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Web",
+        "url": "https://calculadorabtc.com/",
+        "inLanguage": "es-AR",
+        "publisher": {
+            "@type": "Person",
+            "name": "Leandro Riviello",
+            "url": "https://x.com/leandroriviello"
+        },
+        "featureList": [
+            "Conversión directa de Bitcoin a satoshis",
+            "Cálculo cruzado con USD, USDT, ETH, SOL y ARS",
+            "Precios tomados en tiempo real desde CoinGecko"
+        ],
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://calculadorabtc.com/?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='black'/><path d='M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zm-141.651-35.33c4.937-32.999-20.191-50.739-54.55-62.573l11.146-44.702-27.213-6.781-10.851 43.524c-7.154-1.783-14.502-3.464-21.803-5.13l10.929-43.81-27.198-6.781-11.153 44.686c-5.922-1.349-11.735-2.682-17.377-4.084l.031-.14-37.53-9.37-7.239 29.062s20.191 4.627 19.765 4.913c11.022 2.751 13.014 10.044 12.68 15.825l-12.696 50.925c.76.194 1.744.473 2.829.907-.907-.225-1.876-.473-2.876-.713l-17.796 71.338c-1.349 3.348-4.767 8.37-12.471 6.464.271.395-19.78-4.937-19.78-4.937l-13.51 31.147 35.414 8.827c6.588 1.651 13.045 3.379 19.4 5.006l-11.262 45.213 27.182 6.781 11.153-44.733a1038.209 1038.209 0 0 0 21.687 5.627l-11.115 44.523 27.213 6.781 11.262-45.128c46.404 8.781 81.299 5.239 95.986-36.727 11.836-33.79-.589-53.281-25.004-65.991 17.78-4.098 31.174-15.792 34.747-39.949zm-62.177 87.179c-8.41 33.79-65.308 15.523-83.755 10.943l14.944-59.899c18.446 4.603 77.6 13.717 68.811 48.956zm8.417-87.667c-7.673 30.736-55.031 15.12-70.393 11.292l13.548-54.327c15.363 3.828 64.836 10.973 56.845 43.035z' fill='white'/></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        body {
+            background: radial-gradient(120% 120% at 50% 0%, #121924 0%, #050607 55%, #010103 100%);
+            color: #f6f8fb;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: min(6vw, 3rem) 2rem 8rem;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            background-attachment: fixed;
+        }
+
+        body::before,
+        body::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(30px);
+            opacity: 0.7;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::before {
+            width: 480px;
+            height: 480px;
+            background: radial-gradient(circle at 30% 30%, rgba(73, 143, 255, 0.2), transparent 70%);
+            top: -160px;
+            right: -120px;
+        }
+
+        body::after {
+            width: 560px;
+            height: 560px;
+            background: radial-gradient(circle at 60% 70%, rgba(80, 226, 210, 0.18), transparent 70%);
+            bottom: -200px;
+            left: -140px;
+        }
+
+        .container {
+            max-width: 520px;
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        header::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            width: 120px;
+            height: 1px;
+            margin-top: 0.75rem;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+        }
+
+        h1 {
+            font-size: clamp(2rem, 3vw, 2.75rem);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            text-align: center;
+            color: #fcfdff;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            color: rgba(224, 229, 239, 0.7);
+            text-align: center;
+            margin-bottom: 2.5rem;
+            font-size: 1rem;
+            max-width: 36ch;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .converter {
+            background: linear-gradient(160deg, rgba(18, 22, 32, 0.78) 0%, rgba(10, 12, 20, 0.65) 100%);
+            padding: clamp(1.75rem, 3vw, 2.5rem);
+            border-radius: 1.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(26px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .converter::before {
+            content: "";
+            position: absolute;
+            inset: 1px;
+            border-radius: inherit;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            pointer-events: none;
+        }
+
+        .converter::after {
+            content: "";
+            position: absolute;
+            top: -25%;
+            right: -15%;
+            width: 240px;
+            height: 240px;
+            background: radial-gradient(circle at 30% 30%, rgba(120, 186, 255, 0.35), transparent 70%);
+            filter: blur(20px);
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.55rem;
+            color: rgba(228, 234, 244, 0.72);
+            font-size: 0.9rem;
+            letter-spacing: 0.01em;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 0.9rem;
+            background: linear-gradient(140deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            color: #f7f9fc;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            appearance: none;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: rgba(91, 169, 255, 0.7);
+            box-shadow: 0 18px 36px rgba(27, 114, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 0.95rem;
+            background: linear-gradient(120deg, rgba(250, 251, 255, 0.95) 0%, rgba(195, 211, 255, 0.9) 100%);
+            color: #09101d;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            box-shadow: 0 20px 40px rgba(120, 149, 255, 0.35);
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.7), transparent 35%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 24px 50px rgba(120, 149, 255, 0.4);
+        }
+
+        button:hover::after {
+            opacity: 1;
+        }
+
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 12px 24px rgba(120, 149, 255, 0.32);
+        }
+
+        #result {
+            margin-top: 1.75rem;
+            padding: 1.1rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border-radius: 1rem;
+            text-align: center;
+            font-size: 1.1rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            font-variant-numeric: tabular-nums;
+        }
+
+        @media (max-height: 800px) {
+            body {
+                justify-content: flex-start;
+                padding-top: 3rem;
+            }
+
+            main {
+                margin-top: 2rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 1.5rem 1.25rem 7rem;
+            }
+
+            .converter {
+                padding: 1.75rem;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 0.35rem;
+                padding: 0.85rem 1.2rem;
+                border-radius: 1.25rem;
+                bottom: 1.5rem;
+            }
+
+            main {
+                margin-bottom: 9rem;
+            }
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-wrapper::after {
+            content: '▼';
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8f9299;
+            pointer-events: none;
+            font-size: 0.8rem;
+        }
+
+        select {
+            appearance: none;
+            padding-left: 3rem;
+            cursor: pointer;
+        }
+
+        .currency-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+        }
+
+        .currency-icon {
+            width: 24px;
+            height: 24px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+
+        .currency-icon.btc {
+            background-color: #F7931A;
+        }
+
+        .currency-icon.sat {
+            background-color: #F7931A;
+        }
+
+        .currency-icon.usdt {
+            background-color: #26A17B;
+        }
+
+        .currency-icon.ars {
+            background-color: #75AADB;
+        }
+
+        .select-container {
+            position: relative;
+        }
+
+        .select-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            z-index: 1;
+        }
+
+        .custom-select {
+            position: relative;
+            width: 100%;
+        }
+
+        .select-selected {
+            background: linear-gradient(140deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 0.9rem;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            position: relative;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .select-selected:after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 6px solid rgba(255, 255, 255, 0.8);
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: transform 0.3s ease;
+        }
+
+        .select-selected.select-arrow-active:after {
+            border-top: none;
+            border-bottom: 6px solid rgba(255, 255, 255, 0.8);
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .select-selected:hover {
+            border-color: rgba(255, 255, 255, 0.24);
+            box-shadow: 0 18px 36px rgba(40, 107, 255, 0.18);
+        }
+
+        .select-items {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 99;
+            margin-top: 0.5rem;
+            background: linear-gradient(160deg, rgba(13, 18, 28, 0.95) 0%, rgba(9, 12, 18, 0.78) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.85rem;
+            backdrop-filter: blur(16px);
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+        }
+
+        .select-hide {
+            display: none;
+        }
+
+        .select-item {
+            padding: 1rem;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .select-item:hover {
+            background: rgba(91, 169, 255, 0.16);
+            transform: translateX(4px);
+        }
+
+        .select-item.selected {
+            background: rgba(91, 169, 255, 0.22);
+        }
+
+        .select-item i {
+            font-size: 1.1rem;
+        }
+
+        .select-item[data-value="BTC"] i {
+            color: #ffffff;
+        }
+
+        .select-item[data-value="SAT"] i {
+            color: #ffffff;
+        }
+
+        .select-item[data-value="USDT"] i {
+            color: #ffffff;
+        }
+
+        .select-item[data-value="ARS"] i {
+            color: #ffffff;
+        }
+
+        footer {
+            position: fixed;
+            left: 50%;
+            bottom: 2rem;
+            transform: translateX(-50%);
+            width: min(720px, 90vw);
+            padding: 0.9rem 1.5rem;
+            background: linear-gradient(120deg, rgba(12, 15, 24, 0.82) 0%, rgba(6, 8, 14, 0.7) 100%);
+            backdrop-filter: blur(18px);
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            text-align: center;
+            color: rgba(228, 234, 244, 0.8);
+            z-index: 2;
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        footer a {
+            color: rgba(149, 189, 255, 0.9);
+            text-decoration: none;
+            border-bottom: 1px dotted rgba(149, 189, 255, 0.6);
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+
+        footer a:hover {
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.8);
+        }
+
+        main {
+            margin-bottom: 8rem;
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h1>Calculadora BTC a Satoshis</h1>
+        <p class="subtitle">Convertí Bitcoin en satoshis, USD, ARS, ETH, SOL y USDT al instante con precios actualizados desde CoinGecko.</p>
+    </header>
+
+    <main class="container">
+        <article class="converter">
+            <div class="input-group">
+                <label>Cantidad</label>
+                <input type="number" id="amount" placeholder="Ingresa un valor">
+            </div>
+            <div class="input-group">
+                <label>De</label>
+                <div class="custom-select">
+                    <div class="select-selected" id="fromSelected">
+                        <i class="fab fa-bitcoin"></i> Bitcoin (BTC)
+                    </div>
+                    <div class="select-items select-hide" id="fromItems">
+                        <div class="select-item" data-value="BTC">
+                            <i class="fab fa-bitcoin"></i> Bitcoin (BTC)
+                        </div>
+                        <div class="select-item" data-value="USDT">
+                            <i class="fas fa-dollar-sign"></i> Tether (USDT)
+                        </div>
+                        <div class="select-item" data-value="SAT">
+                            <i class="fas fa-coins"></i> Satoshis (SAT)
+                        </div>
+                        <div class="select-item" data-value="ETH">
+                            <i class="fab fa-ethereum"></i> Ethereum (ETH)
+                        </div>
+                        <div class="select-item" data-value="SOL">
+                            <i class="fas fa-sun"></i> Solana (SOL)
+                        </div>
+                        <div class="select-item" data-value="ARS">
+                            <i class="fas fa-dollar-sign"></i> Peso Argentino (ARS)
+                        </div>
+                    </div>
+                    <select id="fromCurrency" style="display: none;">
+                        <option value="BTC">Bitcoin (BTC)</option>
+                        <option value="USDT">Tether (USDT)</option>
+                        <option value="SAT">Satoshis (SAT)</option>
+                        <option value="ETH">Ethereum (ETH)</option>
+                        <option value="SOL">Solana (SOL)</option>
+                        <option value="ARS">Peso Argentino (ARS)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="input-group">
+                <label>A</label>
+                <div class="custom-select">
+                    <div class="select-selected" id="toSelected">
+                        <i class="fas fa-dollar-sign"></i> Tether (USDT)
+                    </div>
+                    <div class="select-items select-hide" id="toItems">
+                        <div class="select-item" data-value="BTC">
+                            <i class="fab fa-bitcoin"></i> Bitcoin (BTC)
+                        </div>
+                        <div class="select-item" data-value="USDT">
+                            <i class="fas fa-dollar-sign"></i> Tether (USDT)
+                        </div>
+                        <div class="select-item" data-value="SAT">
+                            <i class="fas fa-coins"></i> Satoshis (SAT)
+                        </div>
+                        <div class="select-item" data-value="ETH">
+                            <i class="fab fa-ethereum"></i> Ethereum (ETH)
+                        </div>
+                        <div class="select-item" data-value="SOL">
+                            <i class="fas fa-sun"></i> Solana (SOL)
+                        </div>
+                        <div class="select-item" data-value="ARS">
+                            <i class="fas fa-dollar-sign"></i> Peso Argentino (ARS)
+                        </div>
+                    </div>
+                    <select id="toCurrency" style="display: none;">
+                        <option value="BTC">Bitcoin (BTC)</option>
+                        <option value="USDT">Tether (USDT)</option>
+                        <option value="SAT">Satoshis (SAT)</option>
+                        <option value="ETH">Ethereum (ETH)</option>
+                        <option value="SOL">Solana (SOL)</option>
+                        <option value="ARS">Peso Argentino (ARS)</option>
+                    </select>
+                </div>
+            </div>
+            <button onclick="convert()">Convertir ahora</button>
+            <div id="result"></div>
+        </article>
+    </main>
+
+    <footer>
+        <p>Precios actualizados en tiempo real con datos de CoinGecko</p>
+        <p>© 2025 · creado por <a href="https://x.com/leandroriviello" target="_blank" rel="noopener">Leandro Riviello</a></p>
+    </footer>
+
+    <script>
+        let rates = {};
+
+        async function updateRates() {
+            try {
+                // Obtener precios de todas las criptos en USD
+                const cryptoResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd');
+                const cryptoData = await cryptoResponse.json();
+                const btcPrice = cryptoData.bitcoin.usd;
+                const ethPrice = cryptoData.ethereum.usd;
+                const solPrice = cryptoData.solana.usd;
+
+                // Obtener precio de ARS
+                const arsResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=ars');
+                const arsData = await arsResponse.json();
+                const arsRate = arsData.tether.ars;
+
+                rates = {
+                    BTC: btcPrice,
+                    SAT: btcPrice / 100000000,
+                    ETH: ethPrice,
+                    SOL: solPrice,
+                    USDT: 1,
+                    ARS: 1 / arsRate
+                };
+            } catch (error) {
+                console.error('Error al obtener las tasas:', error);
+            }
+        }
+
+        async function convert() {
+            await updateRates();
+            
+            const amount = parseFloat(document.getElementById('amount').value);
+            const fromCurrency = document.getElementById('fromCurrency').value;
+            const toCurrency = document.getElementById('toCurrency').value;
+
+            if (isNaN(amount)) {
+                alert('Por favor ingresa un valor válido');
+                return;
+            }
+
+            // Convertir a USDT primero
+            const usdtAmount = amount * rates[fromCurrency];
+            // Luego convertir a la moneda objetivo
+            const result = usdtAmount / rates[toCurrency];
+
+            // Crear formateador de números estilo argentino
+            const formatter = new Intl.NumberFormat('es-AR', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 8,
+                useGrouping: true
+            });
+
+            // Formatear tanto el monto original como el resultado
+            const formattedAmount = formatter.format(amount);
+            const formattedResult = formatter.format(result);
+
+            document.getElementById('result').innerHTML = `
+                ${formattedAmount} ${fromCurrency} = ${formattedResult} ${toCurrency}
+            `;
+        }
+
+        // Actualizar tasas al cargar la página
+        updateRates();
+
+        // Función para actualizar los íconos
+        function updateIcons() {
+            const fromSelected = document.getElementById('fromSelected');
+            const toSelected = document.getElementById('toSelected');
+            const fromCurrency = document.getElementById('fromCurrency');
+            const toCurrency = document.getElementById('toCurrency');
+
+            function getIconAndText(currency) {
+                switch(currency) {
+                    case 'BTC':
+                        return '<i class="fab fa-bitcoin" style="color: #ffffff;"></i> Bitcoin (BTC)';
+                    case 'SAT':
+                        return '<i class="fas fa-coins" style="color: #ffffff;"></i> Satoshis (SAT)';
+                    case 'ETH':
+                        return '<i class="fab fa-ethereum" style="color: #ffffff;"></i> Ethereum (ETH)';
+                    case 'SOL':
+                        return '<i class="fas fa-sun" style="color: #ffffff;"></i> Solana (SOL)';
+                    case 'USDT':
+                        return '<i class="fas fa-dollar-sign" style="color: #ffffff;"></i> Tether (USDT)';
+                    case 'ARS':
+                        return '<i class="fas fa-dollar-sign" style="color: #ffffff;"></i> Peso Argentino (ARS)';
+                    default:
+                        return '<i class="fas fa-money-bill-alt" style="color: #ffffff;"></i> Desconocido';
+                }
+            }
+
+            fromSelected.innerHTML = getIconAndText(fromCurrency.value);
+            toSelected.innerHTML = getIconAndText(toCurrency.value);
+        }
+
+        // Agregar event listeners para actualizar los íconos
+        document.getElementById('fromCurrency').addEventListener('change', updateIcons);
+        document.getElementById('toCurrency').addEventListener('change', updateIcons);
+
+        // Inicializar los íconos
+        updateIcons();
+
+        function initCustomSelects() {
+            const customSelects = document.querySelectorAll('.custom-select');
+            
+            // Función para cerrar todos los selects excepto el actual
+            function closeAllSelectsExcept(currentSelect) {
+                customSelects.forEach(select => {
+                    if (select !== currentSelect) {
+                        const items = select.querySelector('.select-items');
+                        const selected = select.querySelector('.select-selected');
+                        items.classList.add('select-hide');
+                        selected.classList.remove('select-arrow-active');
+                    }
+                });
+            }
+            
+            customSelects.forEach(customSelect => {
+                const select = customSelect.querySelector('select');
+                const selectSelected = customSelect.querySelector('.select-selected');
+                const selectItems = customSelect.querySelector('.select-items');
+                
+                // Cerrar todos los select cuando se hace clic fuera
+                document.addEventListener('click', function(e) {
+                    if (!customSelect.contains(e.target)) {
+                        selectItems.classList.add('select-hide');
+                        selectSelected.classList.remove('select-arrow-active');
+                    }
+                });
+
+                // Toggle del select
+                selectSelected.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    // Cerrar otros selects antes de abrir este
+                    closeAllSelectsExcept(customSelect);
+                    this.classList.toggle('select-arrow-active');
+                    selectItems.classList.toggle('select-hide');
+                });
+
+                // Manejo de selección de items
+                const items = selectItems.querySelectorAll('.select-item');
+                items.forEach(item => {
+                    item.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const value = this.getAttribute('data-value');
+                        select.value = value;
+                        selectSelected.innerHTML = this.innerHTML;
+                        selectItems.classList.add('select-hide');
+                        selectSelected.classList.remove('select-arrow-active');
+                        
+                        // Disparar evento change en el select original
+                        const event = new Event('change');
+                        select.dispatchEvent(event);
+                    });
+                });
+            });
+        }
+
+        // Inicializar los selects personalizados
+        initCustomSelects();
+
+        // Modificar el script agregando esta función
+        async function setInitialValues() {
+            // Establecer valores iniciales
+            document.getElementById('amount').value = '1000';
+            document.getElementById('fromCurrency').value = 'SAT';
+            document.getElementById('toCurrency').value = 'USDT';
+            
+            // Actualizar los selectores visuales
+            updateIcons();
+            
+            // Realizar la conversión inicial
+            await convert();
+        }
+
+        // Establecer valores iniciales y realizar primera conversión
+        setInitialValues();
+    </script>
+</body>
+</html>
